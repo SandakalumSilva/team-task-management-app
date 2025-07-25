@@ -29,6 +29,14 @@ class RoleRepository implements RoleInterface
         }
     }
 
+    public function allRoles()
+    {
+        $roles = Role::all();
+        return response()->json([
+            'roles' => $roles
+        ]);
+    }
+
     public function store($request)
     {
         $role = Role::create([

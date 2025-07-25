@@ -23,6 +23,10 @@ class RoleController extends Controller
         return $this->roleRepository->getRoles($request);
     }
 
+    public function allRoles(){
+        return $this->roleRepository->allRoles();
+    }
+
     public function store(RoleRequest $request)
     {
         return $this->roleRepository->store($request);

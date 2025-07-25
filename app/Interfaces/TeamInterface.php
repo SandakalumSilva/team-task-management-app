@@ -1,12 +1,12 @@
 <?php 
 namespace App\Interfaces;
 
-interface RoleInterface{
+interface TeamInterface{
     public function index();
-    public function getRoles($request);
-    public function allRoles();
+    public function getTeams($request);
+    public function allTeams();
     public function store($request);
     public function edit($id);
     public function update($request, $id);
-    public function delete($id);
+    public function delete($id);    
 }
