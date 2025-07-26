@@ -6,6 +6,7 @@ use App\Mail\UserWelcomeMail;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Mail\Mailable;
 
 class SendWelcomeEmailJob implements ShouldQueue
 {

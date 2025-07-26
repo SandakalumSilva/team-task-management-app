@@ -67,6 +67,15 @@ $(document).ready(function () {
         });
     }
 
+    $("#addRoleModal").on("hidden.bs.modal", function (e) {
+    
+        $("#edit_role_id").val("");
+        $("#roleName").val("");
+
+        $("#addRoleModalLabel").text("Add New Role");
+        $("#add_role_form button[type='submit']").text("Save Role");
+    });
+
     $(document).on("click", ".edit-role", function (e) {
         const id = $(this).data("id");
 
@@ -90,33 +99,32 @@ $(document).ready(function () {
         });
     });
 
-   $(document).on("click", ".delete-role", function (e) {
-    e.preventDefault();
-    const id = $(this).data("id");
+    $(document).on("click", ".delete-role", function (e) {
+        e.preventDefault();
+        const id = $(this).data("id");
 
-    Swal.fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonColor: "#3085d6",
-        cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, delete it!"
-    }).then((result) => {
-        if (result.isConfirmed) {
-            $.ajax({
-                type: "GET",
-                url: "/role/delete/" + id,
-                success: function (response) {
-                    Swal.fire("Deleted!", response.msg, "success");
-                    $("#role_table").DataTable().ajax.reload();
-                },
-                error: function (xhr) {
-                    Swal.fire("Error", "Something went wrong!", "error");
-                }
-            });
-        }
+        Swal.fire({
+            title: "Are you sure?",
+            text: "You won't be able to revert this!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "GET",
+                    url: "/role/delete/" + id,
+                    success: function (response) {
+                        Swal.fire("Deleted!", response.msg, "success");
+                        $("#role_table").DataTable().ajax.reload();
+                    },
+                    error: function (xhr) {
+                        Swal.fire("Error", "Something went wrong!", "error");
+                    },
+                });
+            }
+        });
     });
-});
-
 });

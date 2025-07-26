@@ -4,6 +4,7 @@
     <a href="{{ route('role.index') }}">Role</a>
     <a href="{{ route('team.index') }}">Teams</a>
     <a href="{{ route('user.index') }}">Users</a>
+    <a href="{{route('project.index')}}">Projects</a>
     <a href="#">My Tasks</a>
     <a href="#">Notifications</a>
     <a href="#">Settings</a>
