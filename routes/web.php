@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\UserController;
@@ -47,6 +48,11 @@ Route::prefix('user')->middleware('auth')->controller(UserController::class)->gr
     Route::get('/edit/{id}', 'edit')->name('user.edit');
     Route::post('/update/{id}', 'update')->name('user.update');
     Route::get('/delete/{id}', 'delete')->name('user.delete');
+});
+
+Route::prefix('project')->middleware('auth')->controller(ProjectController::class)
+->group(function () {
+    Route::get('/index', 'index')->name('project.index');
 });
 
 require __DIR__ . '/auth.php';

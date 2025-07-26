@@ -81,9 +81,17 @@ $(document).ready(function () {
             data: data,
             success: function (response) {
                 notyf.success(response.msg);
-                form.trigger("reset");
+
+                form[0].reset();
+                $("#edit_user_id").val("");
+                $("#userRole").val("").trigger("change");
+                $("#userTeam").val("").trigger("change");
+
                 $("#addUserModal").modal("hide");
                 $(".modal-backdrop").remove();
+
+                $("#addUserLabel").text("Add New User");
+                $("#add_user_form button[type='submit']").text("Save User");
                 $("body").removeClass("modal-open");
                 $("#user_table").DataTable().ajax.reload();
             },
@@ -96,6 +104,19 @@ $(document).ready(function () {
         });
     }
 
+    $("#addUserModal").on("hidden.bs.modal", function () {
+        const form = $("#add_user_form");
+
+        form[0].reset();
+
+        $("#edit_user_id").val("");
+
+        $("#userRole").val("").trigger("change");
+        $("#userTeam").val("").trigger("change");
+        $("#addUserLabel").text("Add New User");
+        $("#add_user_form button[type='submit']").text("Save User");
+    });
+
     $(document).on("click", ".edit-user", function (e) {
         const id = $(this).data("id");
         $.ajax({
@@ -107,20 +128,20 @@ $(document).ready(function () {
                 $("#userEmail").val(response.user.email);
                 $("#userRole").val(response.user.role_id);
                 $("#userTeam").val(response.user.team_id);
-                $("#addUserLabel").text("Edit User");
-                 $("#add_user_form button[type='submit']").text("Update User");
+                $("#addUserLabel").text("Update User");
+                $("#add_user_form button[type='submit']").text("Update User");
                 $("#addUserModal").modal("show");
             },
-            error:function(xhr){
+            error: function (xhr) {
                 const errors = xhr.responseJSON.errors;
                 $.each(errors, function (index, value) {
                     notyf.error(value[0]);
                 });
-            }
+            },
         });
     });
 
-    $(document).on('click', '.delete-user', function (e) {
+    $(document).on("click", ".delete-user", function (e) {
         e.preventDefault();
         const id = $(this).data("id");
         Swal.fire({
@@ -130,25 +151,24 @@ $(document).ready(function () {
             showCancelButton: true,
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
+            confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
                 $.ajax({
                     type: "GET",
                     url: "/user/delete/" + id,
                     success: function (response) {
-                        Swal.fire("Deleted!", response.msg, "success")
+                        Swal.fire("Deleted!", response.msg, "success");
                         $("#user_table").DataTable().ajax.reload();
                     },
-                    error: function (xhr) { 
+                    error: function (xhr) {
                         const errors = xhr.responseJSON.errors;
                         $.each(errors, function (index, value) {
                             notyf.error(value[0]);
                         });
-                    }
+                    },
                 });
             }
-        }); 
-        
+        });
     });
 });
